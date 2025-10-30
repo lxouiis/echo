@@ -1,0 +1,242 @@
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: #0b1116;
+    color: #e7f6ea
+}
+
+.bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: #0a0f14;
+    border-bottom: 1px solid rgba(255, 255, 255, .06)
+}
+
+.bar h1 {
+    margin: 0;
+    font-size: 20px
+}
+
+.bar p {
+    margin: 0;
+    opacity: .8;
+    font-size: 12px
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+
+.controls input {
+    background: #0e151b;
+    border: 1px solid rgba(255, 255, 255, .12);
+    color: #e7f6ea;
+    padding: 6px 8px;
+    border-radius: 8px
+}
+
+.wrap {
+    width: min(1280px, 96vw);
+    margin: 14px auto
+}
+
+canvas#world {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    background: #0b0f12;
+    display: block
+}
+
+.hud {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 2px;
+    opacity: .95
+}
+
+.toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 6px 0 10px
+}
+
+
+/* UPDATED BUTTON STYLES WITH DARK PURPLE AND GLOW */
+
+.btn {
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(139, 92, 180, 0.6);
+    /* Purple border */
+    background: #4a148c;
+    /* Dark Purple background */
+    color: #e7f6ea;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 5px rgba(139, 92, 180, 0.4);
+    transition: transform 0.1s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 12px rgba(139, 92, 180, 0.8);
+    border-color: #8855a0;
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2), 0 0 2px rgba(139, 92, 180, 0.2);
+}
+
+.btn.primary {
+    /* CHANGED: Primary button is now a purple gradient */
+    background: linear-gradient(180deg, #6a1b9a, #4a148c);
+    border-color: #8855a0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 8px rgba(139, 92, 180, 0.6);
+}
+
+.btn.primary:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 16px rgba(139, 92, 180, 1);
+}
+
+.btn.primary:active {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 4px rgba(139, 92, 180, 0.4);
+}
+
+.btn.ghost {
+    background: transparent;
+    opacity: .9;
+    border-color: rgba(255, 255, 255, .1);
+    box-shadow: none;
+}
+
+.btn.ghost:hover {
+    border-color: rgba(255, 255, 255, .3);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.btn.ghost:active {
+    border-color: rgba(255, 255, 255, .05);
+    box-shadow: none;
+}
+
+.board {
+    background: rgba(0, 0, 0, .35);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 12px;
+    padding: 10px;
+    display: none;
+}
+
+.board-list .row {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 8px;
+    align-items: center;
+    padding: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, .06)
+}
+
+.board-list .row:last-child {
+    border-bottom: 0
+}
+
+.badge {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(124, 227, 124, .35);
+    background: rgba(0, 0, 0, .35);
+    font-size: 13px
+}
+
+.toast {
+    position: fixed;
+    left: 14px;
+    bottom: 16px;
+    background: rgba(10, 14, 12, .96);
+    border: 1px solid rgba(124, 227, 124, .35);
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: #dfffe0;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity .2s, transform .2s
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0)
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.modal-backdrop.show {
+    display: flex;
+}
+
+.modal-content {
+    background: #0e151b;
+    border: 1px solid rgba(255, 255, 255, .12);
+    padding: 24px;
+    border-radius: 14px;
+    max-width: 500px;
+    width: 90%;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #7ce37c;
+}
+
+.modal-content p,
+.modal-content li {
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.modal-content ul {
+    padding-left: 20px;
+}
+
+.modal-content button {
+    margin-top: 20px;
+}

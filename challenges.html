@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoGame • Real-World Challenges</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="challenges.css">
+</head>
+
+<body class="home">
+    <div class="top-right-button">
+        <a href="index.html" class="btn-secondary">Back to Home</a>
+    </div>
+    <header class="hero">
+        <h1>Real-World Challenges</h1>
+        <p>Take your eco-actions from the screen to the real world!</p>
+    </header>
+
+    <div style="margin-bottom:1em;text-align:center">
+        <input id="challenge-player-name" type="text" placeholder="Enter your name" style="padding:0.5em 1em;font-size:1.1em;border-radius:6px;border:1px solid #ccc;width:220px;max-width:90%" />
+    </div>
+    <main class="info-section" id="challenge-container">
+    </main>
+
+    <input type="file" id="image-uploader" accept="image/*" style="display: none;">
+
+    <div id="preview-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 id="modal-title">Confirm Submission</h2>
+            <div id="modal-body">
+                <img id="image-preview" src="#" alt="Image Preview" />
+                <p id="modal-text">Does this look right?</p>
+            </div>
+            <div id="modal-actions">
+                <button id="confirm-upload-btn" class="btn-primary">Verify Image</button>
+                <button id="cancel-upload-btn" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-toast" class="toast hidden">
+        <p id="toast-message"></p>
+    </div>
+
+    <script src="challenges.js"></script>
+</body>
+
+</html>

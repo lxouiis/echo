@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoGame • Leaderboard</title>
+        <link rel="stylesheet" href="style.css" />
+        <style>
+            .lb-card {
+                background: linear-gradient(135deg, #101418 60%, #254a2a 100%);
+                border: 2px solid #7ce37c;
+                border-radius: 28px;
+                box-shadow: 0 24px 80px rgba(76,175,80,.22), 0 4px 16px rgba(0,0,0,.22);
+                padding: 38px 32px 28px 32px;
+                max-width: 650px;
+                width: 100%;
+                margin: 0 auto;
+                backdrop-filter: blur(12px);
+                transition: box-shadow .2s;
+            }
+            .lb-card:hover {
+                box-shadow: 0 32px 100px rgba(76,175,80,.28), 0 8px 24px rgba(0,0,0,.28);
+            }
+            .lb-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            .lb-list li {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                padding: 12px 0;
+                border-bottom: 1px solid rgba(124,227,124,.13);
+                font-size: 1.02rem;
+                color: #eaf6ff;
+                word-break: break-word;
+            }
+            .lb-list li:last-child {
+                border-bottom: none;
+            }
+            .lb-list li > span {
+                min-width: 0;
+                flex: 0 1 auto;
+                display: block;
+                text-align: left;
+                margin-bottom: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .lb-rank {
+                flex: 0 0 36px;
+                text-align: right;
+                font-size: 1.1rem;
+            }
+            .lb-name {
+                flex: 1 1 120px;
+                text-align: left;
+                font-size: 1.05rem;
+                font-weight: 600;
+            }
+            .lb-points, .lb-tier, .lb-game, .lb-date {
+                flex: 0 1 80px;
+                text-align: left;
+                margin-right: 0;
+                font-size: 0.98rem;
+            }
+            @media (max-width: 700px) {
+                .lb-card { padding: 16px 4px; max-width: 98vw; }
+                .lb-list li { font-size: 0.92rem; padding: 8px 0; gap: 4px; }
+                .lb-rank { font-size: 0.95rem; }
+                .lb-name { font-size: 0.95rem; }
+            }
+        </style>
+</head>
+
+<body class="home">
+        <section class="info-section" style="display:flex; justify-content:center; align-items:center; min-height:80vh;">
+                        <div class="lb-card">
+                                <h2 style="color:#7ce37c; margin-bottom:18px; text-align:center; font-size:2rem; letter-spacing:.02em;">Leaderboard</h2>
+                                <div style="margin-bottom:18px; text-align:center;">
+                                    <label for="gameFilter" style="color:#cee3ff; font-weight:600; margin-right:8px;">Filter by game:</label>
+                                    <select id="gameFilter" style="padding:6px 14px; border-radius:8px; background:#101418; color:#7ce37c; font-weight:600; border:1px solid #254a2a;">
+                                        <option value="all">All Games</option>
+                                        <option value="Waste Segregation">Waste Segregation</option>
+                                        <option value="Energy Match">Energy Match</option>
+                                        <option value="Eco-Light Switch">Eco-Light Switch</option>
+                                        <option value="Ideal Forest">Ideal Forest</option>
+                                        <option value="Real-World Challenges">Real-World Challenges</option>
+                                    </select>
+                                </div>
+                                <ul id="lb" class="lb-list"></ul>
+                        </div>
+        </section>
+
+    <script>
+        const API_URL = "http://localhost:3000/api/leaderboard";
+        const tier = (rank) => rank <= 10 ? 'Earth Champion 🌿' : rank <= 30 ? 'Green Guardian 🌍' : 'Eco Helper 🌱';
+
+        async function fetchLeaderboard() {
+            try {
+                const res = await fetch(API_URL);
+                return res.ok ? await res.json() : [];
+            } catch {
+                return [];
+            }
+        }
+
+        function render(players) {
+            const ul = document.getElementById('lb');
+            ul.innerHTML = players.length ? players.map((p, i) => {
+                const r = i + 1;
+                return `<li>
+          <span class="lb-rank">#${r}</span>
+          <span class="lb-name">${p.name}</span>
+          <span class="lb-points">${p.total||0} pts</span>
+          <span class="lb-tier">${tier(r)}</span>
+          <span class="lb-game">${p.game || 'Unknown'}</span>
+          <span class="lb-date">${p.lastPlayed ? new Date(p.lastPlayed).toLocaleString() : ''}</span>
+        </li>`;
+            }).join('') : '<li>No scores yet.</li>';
+        }
+
+        async function updateLeaderboard() {
+            let players = await fetchLeaderboard();
+            const filter = document.getElementById('gameFilter').value;
+            if (filter !== 'all') {
+                players = players.filter(p => p.game === filter);
+            }
+            // Sort by total descending
+            players.sort((a, b) => (b.total || 0) - (a.total || 0));
+            render(players);
+        }
+
+        document.getElementById('gameFilter').addEventListener('change', updateLeaderboard);
+        updateLeaderboard();
+    </script>
+</body>
+
+</html>

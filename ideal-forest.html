@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ideal Forest</title>
+    <link rel="stylesheet" href="ideal-forest.css" />
+</head>
+
+<body>
+    <video id="bgVid" src="images1/bg.mp4" autoplay muted loop playsinline style="position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;"></video>
+
+    <header class="bar">
+        <div class="brand">
+            <h1>Ideal Forest</h1>
+            <p>Tap to move • Plant 🌸 • Water 💧 • Build 🍃 wind</p>
+        </div>
+        <div class="controls">
+            <a href="index.html" class="btn ghost">Back to Home</a>
+            <button id="howBtn" class="btn ghost">How to Play</button>
+            <label>Player <input id="playerName" placeholder="Your name" /></label>
+            <button class="btn ghost" id="saveBtn">Save</button>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <canvas id="world" width="1280" height="720" aria-label="Forest"></canvas>
+
+        <section class="hud">
+            <span>🌸 Trees: <b id="treeCount">0</b></span>
+            <span>⚡ Points: <b id="points">0</b></span>
+            <span>🍃 Wind: <b id="windCount">0</b></span>
+            <span>Boost: <b id="boost">1.0x</b></span>
+        </section>
+
+        <section class="toolbar">
+            <button class="btn primary" id="plantBtn">🌸 Plant Cherry (-1000 pts)</button>
+            <button class="btn" id="waterBtn">💧 Water Selected (-500 pts)</button>
+            <button class="btn" id="selectNextBtn">👉 Select Plant</button>
+            <button class="btn" id="buildWindBtn">🍃 Build Wind (-5000 pts)</button>
+            <button class="btn" id="sellTreeBtn">❌ Remove Selected (+5 pts)</button>
+        </section>
+
+        <section class="board">
+            <h3>Leaderboard</h3>
+            <div id="board" class="board-list"></div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <div id="howBackdrop" class="modal-backdrop">
+        <div class="modal-content">
+            <h3>How to Play</h3>
+            <p>Welcome to Ideal Forest! Your goal is to build a beautiful and sustainable ecosystem.</p>
+            <ul>
+                <li><strong>Move:</strong> Tap or click anywhere on the ground to move your character.</li>
+                <li><strong>Plant:</strong> Use the "Plant" button to place a new cherry sapling at your character's location.</li>
+                <li><strong>Select:</strong> Tap on a tree or use the "Select Plant" button to select it.</li>
+                <li><strong>Water:</strong> Once a tree is selected, use the "Water" button to help it grow. Trees have three growth stages.</li>
+                <li><strong>Windmills:</strong> Build windmills to generate points. Each windmill produces 1 point every 30 minutes.</li>
+                <li><strong>Save:</strong> Don't forget to save your progress! Your forest is saved under the player name you enter.</li>
+            </ul>
+            <button id="howClose" class="btn primary">Got it!</button>
+        </div>
+    </div>
+
+    <script src="ideal-forest.js"></script>
+</body>
+
+</html>
