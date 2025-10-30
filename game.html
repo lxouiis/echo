@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoGame • Waste Sorting Challenge</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="game-page">
+    <header class="game-header" role="banner">
+        <h1>Waste Sorting Challenge</h1>
+        <div style="display:flex; gap:10px; align-items:center;">
+            <a href="index.html" class="btn-secondary" role="button" aria-label="Back to Home">Home</a>
+            <a href="leaderboard.html" class="btn-secondary" role="button" aria-label="Open Leaderboard">Leaderboard</a>
+        </div>
+    </header>
+
+    <main id="game" aria-label="Park play area" role="region">
+        <img src="images/banana.png" class="item" id="banana" draggable="true" tabindex="0" alt="Banana peel" />
+        <img src="images/battery.png" class="item" id="battery" draggable="true" tabindex="0" alt="Battery" />
+        <img src="images/paper.png" class="item" id="paper" draggable="true" tabindex="0" alt="Paper" />
+        <img src="images/bottle.png" class="item" id="bottle" draggable="true" tabindex="0" alt="Plastic bottle" />
+        <img src="images/apple.png" class="item" id="apple" draggable="true" tabindex="0" alt="Apple core" />
+        <img src="images/fishbone.png" class="item" id="fishbone" draggable="true" tabindex="0" alt="Fish bone" />
+        <img src="images/plasticbag.png" class="item" id="plasticbag" draggable="true" tabindex="0" alt="Plastic bag" />
+        <img src="images/chips.png" class="item" id="chips" draggable="true" tabindex="0" alt="Chips packet" />
+        <img src="images/phone.png" class="item" id="phone" draggable="true" tabindex="0" alt="Phone" />
+        <img src="images/cloth.png" class="item" id="cloth" draggable="true" tabindex="0" alt="Cloth" />
+        <img src="images/glass.png" class="item" id="glass" draggable="true" tabindex="0" alt="Glass" />
+        <img src="images/cardboard.png" class="item" id="cardboard" draggable="true" tabindex="0" alt="Cardboard" />
+        <img src="images/joystick.png" class="item" id="joystick" draggable="true" tabindex="0" alt="Joystick" />
+        <img src="images/bone.png" class="item" id="bone" draggable="true" tabindex="0" alt="Bone" />
+
+        <div class="bins" role="region" aria-label="Sorting bins">
+            <img src="images/compost-bin.png" class="bin" id="compost" data-type="compost" alt="Compost bin" />
+            <img src="images/recycle-bin.png" class="bin" id="recycle" data-type="recycle" alt="Recycle bin" />
+            <img src="images/hazardous-bin.png" class="bin" id="hazardous" data-type="hazardous" alt="Hazardous bin" />
+        </div>
+
+        <section id="hud" aria-label="Game controls" role="region">
+            <input type="text" id="playerName" placeholder="Name" aria-label="Player name" />
+            <button id="startBtn" class="btn-primary small" type="button" aria-haspopup="dialog">Start</button>
+            <button id="finishBtn" class="btn-primary small" type="button" style="display:none;">Finish</button>
+            <span id="score" aria-live="polite">0</span>
+        </section>
+
+        <div id="hint" aria-live="polite" role="status"></div>
+
+        <div id="startFlash" aria-hidden="true">START!</div>
+
+        <div id="scorePopup"></div>
+
+        <section id="howto" class="show" role="dialog" aria-modal="true" aria-labelledby="howtoTitle" aria-describedby="howtoDesc">
+            <div class="card">
+                <h3 id="howtoTitle">How to Play</h3>
+                <p id="howtoDesc">
+                    The goal of this game is to sort all 14 items into the correct bins. Drag and drop each item or use the keyboard shortcuts (1, 2, 3) to sort them.
+                </p>
+                <div class="actions">
+                    <button id="howtoClose" class="btn-primary small" type="button">Got it</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="endCard" role="dialog" aria-modal="true" aria-labelledby="endTitle" aria-describedby="endDesc">
+            <div class="card">
+                <h3 id="endTitle">Great job!</h3>
+                <p id="endDesc">
+                    Every choice counts. Building energy-saving habits—like short showers, cycling, and turning off lights—adds up to a healthier planet.
+                </p>
+                <div class="stats">
+                    <span id="finalScore">Score: 0</span>
+                    <span id="finalItems">Items Sorted: 0</span>
+                </div>
+                <div class="actions">
+                    <button id="playAgain" class="btn-primary small" type="button">Play Again</button>
+                    <a href="leaderboard.html" class="btn-secondary">Leaderboard</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="toast" role="status" aria-live="polite"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

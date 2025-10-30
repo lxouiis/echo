@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EcoGame • Identify Plants</title>
+  <link rel="stylesheet" href="challenges.css"/>
+</head>
+<body>
+  <!-- Background video -->
+  <video class="bg-video" id="bg-video" autoplay muted loop playsinline>
+    <source src="images1/Plant_Animation_Video_Generation.mp4" type="video/mp4"/>
+  </video>
+
+  <!-- Animated Background (fallback / overlay) -->
+  <div class="bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="marquee" aria-hidden="true">
+      <span>NEXT&nbsp;NEXT&nbsp;NEXT&nbsp;NEXT&nbsp;NEXT&nbsp;NEXT&nbsp;</span>
+      <span>NEXT&nbsp;NEXT&nbsp;NEXT&nbsp;NEXT&nbsp;NEXT&nbsp;NEXT&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="left">
+      <button id="btn-leaderboard" class="chip">🏆 Leaderboard</button>
+      <button id="btn-setname" class="chip">✍️ Name</button>
+    </div>
+    <div class="title">EcoGame</div>
+    <div class="status">
+      <span id="player-name" class="chip" title="Click to set name">👤 Player</span>
+      <span id="player-score" class="chip chip--accent">⭐ 0</span>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="wrap">
+    <!-- Identify Search -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Identify a Plant</h2>
+        <p class="muted">Upload a photo and we’ll guess the species, family & basics.</p>
+      </div>
+
+      <div class="searchbar" id="searchbar">
+        <div class="thumb" id="thumb" aria-hidden="true">
+          <img id="thumb-img" alt="Preview"/>
+          <span class="thumb-fallback">🌿</span>
+        </div>
+
+        <input id="search-input" type="text" placeholder="Drop an image or click Upload…"
+               aria-label="Selected image filename" readonly />
+
+        <div class="actions">
+          <input id="file-input" type="file" accept="image/*" hidden />
+          <button id="btn-upload" class="btn">📎 Upload</button>
+          <button id="btn-identify" class="btn btn-primary">🔎 Search</button>
+        </div>
+      </div>
+
+      <div id="progress" class="progress hidden" aria-hidden="true">
+        <div id="bar" class="bar"></div>
+        <div id="progress-text" class="progress-text">Analyzing…</div>
+      </div>
+
+      <div class="hint muted">
+        Pro tip: a close, well-lit shot of leaves/flower helps accuracy.
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="card" id="results-card" hidden>
+      <div class="result-head">
+        <img id="result-shot" alt="Your photo" class="result-shot"/>
+        <div>
+          <h3 id="res-name">—</h3>
+          <div class="chips">
+            <span id="res-family" class="chip">Family: —</span>
+            <span id="res-confidence" class="chip chip--ok">Confidence: —</span>
+          </div>
+        </div>
+      </div>
+      <div id="res-meta" class="res-meta"></div>
+    </section>
+
+    <!-- Challenges (earn points by uploading proof) -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Weekly Missions</h2>
+        <p class="muted">Do eco-friendly tasks and submit proof to earn points.</p>
+      </div>
+      <div id="challenge-list" class="stack"></div>
+    </section>
+
+    <!-- Leaderboard modal -->
+    <dialog id="lb-modal" class="modal">
+      <form method="dialog" class="modal-card">
+        <header>
+          <h3>Leaderboard</h3>
+          <button class="btn btn-ghost" value="cancel">✕</button>
+        </header>
+        <div id="lb-body"></div>
+      </form>
+    </dialog>
+
+    <!-- Kudos modal -->
+    <dialog id="kudos-modal" class="modal">
+      <form method="dialog" class="modal-card">
+        <header>
+          <h3>🎉 Kudos!</h3>
+          <button class="btn btn-ghost" value="cancel">✕</button>
+        </header>
+        <div class="kudos-body">
+          <p>Kudos — you lived up to be a good environmentalist. Keep learning!</p>
+          <p class="muted">You earned <b>+10 points</b>.</p>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" value="ok">Awesome</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Name modal -->
+    <dialog id="name-modal" class="modal">
+      <form method="dialog" class="modal-card" id="name-form">
+        <header>
+          <h3>Set your name</h3>
+          <button class="btn btn-ghost" value="cancel">✕</button>
+        </header>
+        <div class="modal-body">
+          <label for="name-input" class="muted">Player name</label>
+          <input id="name-input" type="text" placeholder="e.g., Ruchita" class="input"/>
+        </div>
+        <div class="modal-actions">
+          <button class="btn" value="cancel">Cancel</button>
+          <button class="btn btn-primary" id="save-name" value="save">Save</button>
+        </div>
+      </form>
+    </dialog>
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="challenges.js"></script>
+</body>
+</html>

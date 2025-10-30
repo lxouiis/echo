@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoGame • Leaderboard</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="home">
+    <header class="hero">
+        <h1>Leaderboard</h1>
+        <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <a href="index.html" class="btn-secondary">Back</a>
+            <!-- Play button removed as requested -->
+        </div>
+    </header>
+
+    <section class="info-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+            <ul id="lb" style="list-style:none; padding:0; margin:0; flex:1;"></ul>
+            <button id="clearDataBtn" class="btn-secondary" type="button">Clear my data</button>
+        </div>
+    </section>
+
+    <script>
+        const KEY = "ecogame.players";
+        const tier = (rank) => rank <= 10 ? 'Earth Champion 🌿' : rank <= 30 ? 'Green Guardian 🌍' : 'Eco Helper 🌱';
+
+        function loadPlayers() {
+            try {
+                return JSON.parse(localStorage.getItem(KEY) || "[]");
+            } catch {
+                return [];
+            }
+        }
+
+        function render() {
+            const players = loadPlayers().sort((a, b) => (b.total || 0) - (a.total || 0));
+            const ul = document.getElementById('lb');
+            ul.innerHTML = players.length ? players.map((p, i) => {
+                const r = i + 1;
+                return `<li style="padding:10px 0;border-bottom:1px solid rgba(124,227,124,.2);display:flex;gap:10px;justify-content:space-between;">
+          <span><strong>#${r}</strong> • ${p.name}</span>
+          <span><strong>${p.total||0}</strong> pts • ${tier(r)}</span>
+        </li>`;
+            }).join('') : '<li>No scores yet.</li>';
+        }
+        document.getElementById('clearDataBtn').addEventListener('click', () => {
+            try {
+                localStorage.removeItem(KEY);
+            } catch (e) {}
+            render();
+            alert('Local leaderboard data cleared on this device.');
+        });
+        render();
+    </script>
+</body>
+
+</html>

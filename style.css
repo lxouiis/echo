@@ -1,0 +1,377 @@
+/* Base */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0f1216;
+    color: #e6efe6;
+}
+
+
+/* Buttons */
+
+.btn-primary {
+    display: inline-block;
+    background: #4caf50;
+    color: #0f1216;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(76, 175, 80, 0.35);
+}
+
+.btn-primary.small {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+}
+
+.btn-primary:hover {
+    background: #3d9442;
+}
+
+.btn-secondary {
+    color: #4caf50;
+    border: 2px solid #4caf50;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background: #4caf50;
+    color: #0f1216;
+}
+
+
+/* Game header */
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #254a2a;
+    background: #101418;
+}
+
+.game-header h1 {
+    color: #7ce37c;
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+
+/* Game area — large park */
+
+#game {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 92px);
+    background: url('images/park.png') center center / cover no-repeat;
+    overflow: hidden;
+}
+
+@supports(height: 100dvh) {
+    #game {
+        height: calc(100dvh - 92px);
+    }
+}
+
+
+/* Items (positions are random in JS) */
+
+.item {
+    position: absolute;
+    width: 72px;
+    user-select: none;
+    cursor: grab;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .35));
+    transition: transform .15s ease;
+}
+
+.item:active {
+    transform: scale(1.08);
+    cursor: grabbing;
+}
+
+
+/* Bins */
+
+.bins {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 0 20px;
+}
+
+.bin {
+    width: 120px;
+    border: 0;
+    filter: drop-shadow(0 0 6px rgba(124, 227, 124, .25));
+    transition: filter .2s ease;
+}
+
+.bin.drag-over {
+    filter: drop-shadow(0 0 18px rgba(124, 227, 124, .85));
+}
+
+
+/* Minimal HUD */
+
+#hud {
+    position: absolute;
+    top: 16px;
+    left: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    padding: 8px 10px;
+    backdrop-filter: blur(4px);
+}
+
+#hud input {
+    width: 130px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+#score {
+    font-weight: 800;
+    color: #a9e8a9;
+    font-size: 1.1rem;
+    min-width: 34px;
+    text-align: right;
+}
+
+
+/* Toast */
+
+.toast {
+    position: fixed;
+    left: 12px;
+    bottom: 60px;
+    background: rgba(8, 10, 12, 0.92);
+    color: #e7ffe7;
+    border: 1px solid rgba(124, 227, 124, .35);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity .25s ease, transform .25s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Onboarding hint */
+
+#hint {
+    position: absolute;
+    left: 12px;
+    bottom: 64px;
+    background: rgba(8, 10, 12, 0.92);
+    color: #e7ffe7;
+    border: 1px solid rgba(124, 227, 124, .35);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity .25s ease, transform .25s ease;
+    max-width: 70vw;
+}
+
+#hint.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Focus ring for keyboard users */
+
+.item:focus {
+    outline: 3px solid rgba(124, 227, 124, .8);
+    outline-offset: 2px;
+    border-radius: 8px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 700px) {
+    #game {
+        height: calc(100vh - 112px);
+    }
+    @supports(height: 100dvh) {
+        #game {
+            height: calc(100dvh - 112px);
+        }
+    }
+    .bin {
+        width: 96px;
+    }
+    .item {
+        width: 64px;
+    }
+    #hud {
+        left: 8px;
+        top: 8px;
+    }
+}
+
+
+/* Modals */
+
+body.modal-open {
+    overflow: hidden;
+}
+
+#howto,
+#endCard {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#howto.show,
+#endCard.show {
+    display: flex;
+}
+
+#howto .card,
+#endCard .card {
+    width: min(600px, 92vw);
+    background: rgba(10, 14, 18, 0.80);
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 16px;
+    padding: 18px 20px;
+    color: #eaf6ff;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, .5);
+}
+
+#howto h3,
+#endCard h3 {
+    margin: 0 0 8px 0;
+    color: #cfefff;
+    letter-spacing: .02em;
+}
+
+#howto p,
+#endCard p {
+    margin: 0 0 12px 0;
+    color: #cee3ff;
+    line-height: 1.5;
+}
+
+#endCard .stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    color: #bde0ff;
+    font-weight: 800;
+}
+
+#howto .actions,
+#endCard .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+
+/* --- NEW: Score Pop-up Styles --- */
+
+#scorePopup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 18, 22, 0.85);
+    /* Black box */
+    padding: 18px 36px;
+    border-radius: 12px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    z-index: 100;
+    pointer-events: none;
+    /* Can't be clicked */
+    opacity: 0;
+    /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+
+/* Animation trigger */
+
+#scorePopup.show {
+    animation: scorePopupAnimation 1s ease-out forwards;
+}
+
+
+/* Color modifiers */
+
+#scorePopup.correct {
+    color: #4caf50;
+    /* Green */
+}
+
+#scorePopup.incorrect {
+    color: #f44336;
+    /* Red */
+}
+
+
+/* Keyframe Animation */
+
+@keyframes scorePopupAnimation {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -150%) scale(1.2);
+        /* Move up and fade out */
+    }
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 03adc81 (Add videos and other website updates)
